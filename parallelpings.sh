@@ -7,6 +7,8 @@ then
    exit 1
 fi
 
+hosts=$1
+
 function customping 
 {
   ping -c 1 -W 1 $1 >/dev/null 2>&1 && echo "$1 is up" || echo "$1 is down"
@@ -24,7 +26,7 @@ noofproc=$2
 echo "Max processes: $noofproc"
 fi
 
-export -f customping && cat $1 | xargs -n 1 -P $noofproc -I{} bash -c 'customping "$@"' _ {} \;
+export -f customping && cat $hosts | xargs -n 1 -P $noofproc -I{} bash -c 'customping "$@"' _ {} \;
 
 T="$(($(date +%s%N)-T))"
 MS="$((T/1000000))"

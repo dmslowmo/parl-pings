@@ -17,7 +17,7 @@ function customping
 
 T="$(date +%s%N)"
 
-defaultno=24
+defaultno=$(cat $hosts | wc -l) #max no of procs is as many as no. of hosts
 noofproc=$defaultno
 
 if [ -n "$2" ] #user-set no. of process instead of default

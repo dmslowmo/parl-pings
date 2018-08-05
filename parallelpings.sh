@@ -17,16 +17,16 @@ function customping
 
 T="$(date +%s%N)"
 
-defaultno=$(cat $hosts | wc -l) #max no of procs is as many as no. of hosts
-noofproc=$defaultno
+DEFAULT_NO_OF_PROC=8
+noofproc=$DEFAULT_NO_OF_PROC
 
 if [ -n "$2" ] #user-set no. of process instead of default
 then
-noofproc=$2
-echo "Max processes: $noofproc"
+  noofproc=$2
+  echo "Max processes: $noofproc"
 fi
 
-export -f customping && cat $hosts | xargs -n 1 -P $noofproc -I{} bash -c 'customping "$@"' _ {} \;
+export -f customping && cat $hosts | xargs -n 1 -P $noofproc -I{} bash -c 'customping {}' \;
 
 T="$(($(date +%s%N)-T))"
 MS="$((T/1000000))"
